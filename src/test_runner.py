@@ -8,8 +8,8 @@ if __name__ == "__main__":
 
     train_supervised(
         model=model,
-        run_name="Baseline",
-        epochs=5,
+        run_name="BaselineCNN",
+        epochs=10,
         batch_size=8,
         lr=2e-4,
         save_debug_every=1,

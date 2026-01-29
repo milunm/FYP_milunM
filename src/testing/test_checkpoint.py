@@ -5,8 +5,8 @@ from pathlib import Path
 
 
 # for UNET, switch commented lines
-from src.models.baseline_model import BaselineModel as ModelClass
-# from src.models.unet_model import UNetModel as ModelClass   # <- later
+#from src.models.baseline_model import BaselineModel as ModelClass
+from src.models.unet_model import UNet as ModelClass   # easy switch between models
 
 from src.dataset import PairedDataset  #import the PairedDataset class from dataset.py
 
@@ -15,7 +15,7 @@ from src.DataLoader import test_loader
 
 
 # choose checkpoint here 
-CKPT_PATH = "src/models/checkpoints/baseline/best_baseline.pt"
+CKPT_PATH = "src/models/checkpoints/UNET/best_UNET.pt"
 
 
 
@@ -31,11 +31,19 @@ def main():
     model.eval() #eval mode for inference
 
     # load checkpoint
-    ckpt = torch.load(CKPT_PATH, map_location="cpu",weights_only=True)
+    
+
+    ckpt = torch.load(CKPT_PATH, map_location="cpu")  # ALWAYS safe
+
+    print("CKPT type:", type(ckpt))
+    if isinstance(ckpt, dict):
+        print("CKPT keys:", list(ckpt.keys())[:30])
+
 
    
-    state_dict = ckpt["model_state_dict"] if isinstance(ckpt, dict) and "model_state_dict" in ckpt else ckpt
-    model.load_state_dict(state_dict, strict=False)
+    state_dict = ckpt["model_state"] 
+    model.load_state_dict(state_dict, strict=True)
+    model.to(device)  #move model to device
 
     # load test data from import
     loader = test_loader
@@ -62,9 +70,10 @@ def main():
 
             # save ONE visual grid (input | pred | target) from the first batch only
             if not saved_grid:
-                x_vis = x.clamp(0, 1).cpu() #clamp input to [0,1] and move to CPU for saving
-                p_vis = pred.clamp(0, 1).cpu() #clamp prediction to [0,1] and move to CPU for saving
-                y_vis = y.clamp(0, 1).cpu() #clamp target to [0,1] and move to CPU for saving
+
+                x_vis = ((x + 1) / 2).clamp(0, 1).cpu() #convert from [-1,1] to [0,1] and move to CPU for saving
+                p_vis = ((pred + 1) / 2).clamp(0, 1).cpu() #convert from [-1,1] to [0,1] and move to CPU for saving
+                y_vis = ((y + 1) / 2).clamp(0, 1).cpu() #convert from [-1,1] to [0,1] and move to CPU for saving
 
                 if x_vis.size(1) == 1:  # if input is single channel (grayscale)
                     x_vis = x_vis.repeat(1, 3, 1, 1)  # convert to 3-channel by repeating
