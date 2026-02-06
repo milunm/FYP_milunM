@@ -6,3 +6,5 @@ tqdm
 matplotlib
 opencv-python
 pyyaml
+torchmetrics>=1.2.0
+lpips>=0.1.4

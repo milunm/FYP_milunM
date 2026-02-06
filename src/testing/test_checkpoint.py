@@ -3,6 +3,9 @@ import torch.nn as nn
 from torchvision.utils import make_grid, save_image
 from pathlib import Path
 
+from torchmetrics.image import PeakSignalNoiseRatio, StructuralSimilarityIndexMeasure
+import lpips
+
 
 # for UNET, switch commented lines
 #from src.models.baseline_model import BaselineModel as ModelClass
