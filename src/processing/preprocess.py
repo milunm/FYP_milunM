@@ -1,105 +1,89 @@
-import random
-from pathlib import Path
-from PIL import Image
+from pathlib import Path #better paths than raw strings
+import cv2 # OpenCV for image processing (resizing, color space conversion)
+from PIL import Image # for saving images (PIL can handle saving in various formats easily)
+import random # for shuffling dataset before splitting
 
-RAW_ROOT = Path("data/raw/AnitaDataset") #raw unprocessed anita dataset (input)
-OUT_ROOT = Path("data/processed") #processed dataset output location 
+# -----------------------------
+# Configuration
+# -----------------------------
 
-SPLITS = {"train": 0.8, "val": 0.1, "test": 0.1} #80% train, 10% val, 10% test
-SEED = 42 #control randomness for reproducibility
+RAW_ROOT = Path("data/leftImg8bit_trainvaltest/leftImg8bit") # root directory containing raw images, expected to have subfolders for train/val/test with city subfolders inside
+OUT_ROOT = Path("data/processed") # output directory for processed images, will have subfolders train/val/test each containing input and target folders
 
+SIZE = (256, 256) #predefined image dimensions for resizing (width, height)
 
-def is_image(name: str) -> bool:
-    name = name.lower() #lowercase so PNG or png work
-    return name.endswith((".png", ".jpg", ".jpeg", ".webp")) #return true only if the filename is a valid image extension
+# reproducible shuffle
+random.seed(42)
 
+# -----------------------------
+# Create output folders
+# -----------------------------
 
-def ensure_dirs():
-    for split in SPLITS:
-        (OUT_ROOT / split / "input").mkdir(parents=True, exist_ok=True)
-        (OUT_ROOT / split / "target").mkdir(parents=True, exist_ok=True) #create input and target directories for all 3 splits
+splits = ["train", "val", "test"] # create input and target subfolders for each split (train/val/test)
 
+for split in splits:
+    (OUT_ROOT / split / "input").mkdir(parents=True, exist_ok=True) #iterate and create input folders
+    (OUT_ROOT / split / "target").mkdir(parents=True, exist_ok=True) #iterate and create target folders
 
-def collect_pairs():
-    pairs = [] #initialise empty list to hold valid pairs
-    projects = [p for p in RAW_ROOT.iterdir() if p.is_dir()] #find all project folders in raw data (there are lots of diff 'projects' with sketch/color pairs within the full dataset)
-    print(f"Found {len(projects)} project folders")
+# -----------------------------
+# Collect all images
+# -----------------------------
 
-    for proj in sorted(projects): #iterate through each project folder in sorted order
-        sketch_root = proj / "sketch" #path to sketch folder
-        color_root = proj / "color" #path to color folder
+image_paths = list(RAW_ROOT.rglob("*.png")) # recursively find all .png images in RAW_ROOT (and subdirectories), returns a list of Path objects
+print(f"Total images found: {len(image_paths)}") # print total number of images found, should be 5000   for the leftImg8bit dataset
 
-        if not sketch_root.exists() or not color_root.exists():
-            print(f"Skipping {proj.name} (missing sketch/color)")
-            continue #if any project is missing either folder, skip it
+random.shuffle(image_paths)
 
-        for sketch_path in sketch_root.rglob("*"): #for every subolder and file inside the sketch folder
-            if not sketch_path.is_file() or not is_image(sketch_path.name): #only keep valid image files
-                continue
+# -----------------------------
+# Split dataset (80 / 10 / 10)
+# -----------------------------
 
-            rel = sketch_path.relative_to(sketch_root) #get relative path of sketch file within sketch folder
-            color_path = color_root / rel #construct corresponding color image path using same relative path (as they have same relative path, just diff root either sketch or color)
+total = len(image_paths) #get total number of images found to calculate split indexes for train/val/test splits based on 80/10/10 ratio
 
-            if color_path.exists(): #if the same path exists in color folder, append the 2 images as a pair
-                pairs.append((sketch_path, color_path))
+train_end = int(0.8 * total) #index for end of training split (80% of total)
+val_end = int(0.9 * total) #index for end of validation split (90% of total, since validation is 10% after training)
 
-    print(f"Collected {len(pairs)} valid pairs")
-    return pairs #return all pairs found
+train_files = image_paths[:train_end] # assign the first 80% of the shuffled image paths to the training split, this will be used for training the model
+val_files = image_paths[train_end:val_end] # assign the next 10% of the shuffled image paths to the validation split, this will be used for tuning hyperparameters and early stopping during training
+test_files = image_paths[val_end:]  # assign the last 10% of the shuffled image paths to the test split, this will be used for final evaluation of the model after training is complete
 
+dataset_splits = {
+    "train": train_files,
+    "val": val_files,
+    "test": test_files #store the file paths for each split in a dictionary for easy access during processing
+}
 
-def split_pairs(pairs):
-    random.seed(SEED) #reproducible random seed
-    random.shuffle(pairs) #shuffle the pairs randomly
+# -----------------------------
+# Process images
+# -----------------------------
 
-    n = len(pairs) #length of all pairs
-    n_train = int(n * SPLITS["train"]) #number of training samples (total multiplied by train percentage)
-    n_val = int(n * SPLITS["val"]) #number of validation samples (total multiplied by val percentage)
- #slice shuffled list into three pieces by index
-    train = pairs[:n_train]
-    val = pairs[n_train:n_train + n_val]
-    test = pairs[n_train + n_val:]
+for split, files in dataset_splits.items(): #iterate through each split and its corresponding file paths
 
-    return {"train": train, "val": val, "test": test} #return the three splits
+    print(f"Processing {split} ({len(files)} images)...")
 
+    for img_path in files:
 
-def save_split(split_name, pairs):
-    in_dir = OUT_ROOT / split_name / "input" 
-    tg_dir = OUT_ROOT / split_name / "target" #set input and target paths based on the inputted splits
+        # load image (OpenCV loads BGR)
+        bgr = cv2.imread(str(img_path)) # read image from disk using OpenCV, returns a numpy array in BGR color space (3 channels)
+        rgb = cv2.cvtColor(bgr, cv2.COLOR_BGR2RGB) # convert from BGR to RGB color space, since OpenCV uses BGR by default but we want RGB for our dataset and model training
 
-    saved = 0 #track number of saved pairs
-    for idx, (sketch_path, color_path) in enumerate(pairs): #loop through each pair in the split, generate an index
-        try: #try-except block to catch errors during saving
-            with Image.open(sketch_path) as s: #open sketch file from raw dataset
-                s = s.convert("L") #convert to L mode (1 channel - grayscale), aligning with model expectation
-                s.save(in_dir / f"{idx:06d}.png") #save in input directory with index filename padded with 6 zeros
+        # resize image
+        rgb = cv2.resize(rgb, SIZE) # resize the RGB image to the predefined SIZE (256x256) using OpenCV's resize function, this ensures all images are the same size for training
 
-            with Image.open(color_path) as c: #open color file from raw dataset
-                c = c.convert("RGB") #convert to RGB mode (3 channel - color), aligning with model expectation
-                c.save(tg_dir / f"{idx:06d}.png") #save in target directory with index filename padded with 6 zeros
+        # convert RGB -> LAB
+        lab = cv2.cvtColor(rgb, cv2.COLOR_RGB2LAB) # convert the resized RGB image to LAB color space using OpenCV, LAB separates lightness (L) from color information (A and B channels), which is useful for our task of colorization 
 
-            saved += 1 #increment saved count
-            if saved % 500 == 0:
-                print(f"[{split_name}] saved {saved} pairs...") #feedback every 500 pairs saved
+        # extract L channel, this will be our input (grayscale image) for the model, it has values in the range [0, 255]
+        L = lab[:, :, 0] # extract the L channel (lightness) from the LAB image, this will be our input (grayscale sketch) for the model, it has values in the range [0, 255]
 
-        except Exception as e:
-            print(f"[{split_name}] Failed: {sketch_path} ({e})") #any error, print and continue
+        filename = img_path.name # get the filename from the original image path, we will use this to save the processed input and target images with the same name in their respective folders (input and target) for easy pairing during training
 
-    print(f"{split_name}: saved {saved} pairs") #at the end print total saved for this split
+        # save grayscale input
+        input_path = OUT_ROOT / split / "input" / filename # define the path to save the grayscale input image, it will be saved in the input folder of the corresponding split (train/val/test) with the same filename as the original image
+        Image.fromarray(L).save(input_path) # save the L channel as a grayscale image using PIL, this will be our input for the model during training, it is saved in the input folder of the corresponding split (train/val/test) with the same filename as the original image
 
+        # save RGB target
+        target_path = OUT_ROOT / split / "target" / filename # define the path to save the RGB target image, it will be saved in the target folder of the corresponding split (train/val/test) with the same filename as the original image
+        Image.fromarray(rgb).save(target_path) # save the resized RGB image as the target using PIL, this will be our target for the model during training, it is saved in the target folder of the corresponding split (train/val/test) with the same filename as the original image
 
-def main(): #run entire preprocess pipeline
-    ensure_dirs() #create necessary directories for splits, or do nothing if they already exist
-
-    pairs = collect_pairs() #scan raw data, find valid pairs, store them as a list in memory
-    splits = split_pairs(pairs) #shuffle and split pairs into train/val/test dictionaries
-
-    for split_name, split_list in splits.items():   #for eachsplit, save images to disk in the correct folders
-        save_split(split_name, split_list)
-
-    print("\nDataset split complete.")
-    for k, v in splits.items():
-        print(f"{k}: {len(v)} samples") #print samples in each split
-
-
-if __name__ == "__main__":
-    main() #only run main function if the file is directly executed
+print("Preprocessing complete.")

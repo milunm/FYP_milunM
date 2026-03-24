@@ -1,0 +1,63 @@
+Device: cuda
+Epoch 01/25 | train L1: 0.0763 | val L1: 0.0386
+ saved best.pt
+Saved debug_epoch01.png
+Epoch 02/25 | train L1: 0.0491 | val L1: 0.0330
+ saved best.pt
+Saved debug_epoch02.png
+Epoch 03/25 | train L1: 0.0412 | val L1: 0.0292
+ saved best.pt
+Saved debug_epoch03.png
+Epoch 04/25 | train L1: 0.0357 | val L1: 0.0287
+ saved best.pt
+Saved debug_epoch04.png
+Epoch 05/25 | train L1: 0.0320 | val L1: 0.0273
+ saved best.pt
+Saved debug_epoch05.png
+Epoch 06/25 | train L1: 0.0303 | val L1: 0.0242
+ saved best.pt
+Saved debug_epoch06.png
+Epoch 07/25 | train L1: 0.0289 | val L1: 0.0280
+Saved debug_epoch07.png
+Epoch 08/25 | train L1: 0.0278 | val L1: 0.0263
+Saved debug_epoch08.png
+Epoch 09/25 | train L1: 0.0267 | val L1: 0.0240
+ saved best.pt
+Saved debug_epoch09.png
+Epoch 10/25 | train L1: 0.0259 | val L1: 0.0278
+Saved debug_epoch10.png
+Epoch 11/25 | train L1: 0.0255 | val L1: 0.0225
+ saved best.pt
+Saved debug_epoch11.png
+Epoch 12/25 | train L1: 0.0250 | val L1: 0.0221
+ saved best.pt
+Saved debug_epoch12.png
+Epoch 13/25 | train L1: 0.0244 | val L1: 0.0217
+ saved best.pt
+Saved debug_epoch13.png
+Epoch 14/25 | train L1: 0.0241 | val L1: 0.0246
+Saved debug_epoch14.png
+Epoch 15/25 | train L1: 0.0239 | val L1: 0.0248
+Saved debug_epoch15.png
+Epoch 16/25 | train L1: 0.0236 | val L1: 0.0221
+Saved debug_epoch16.png
+Epoch 17/25 | train L1: 0.0234 | val L1: 0.0237
+Saved debug_epoch17.png
+Epoch 18/25 | train L1: 0.0230 | val L1: 0.0222
+Saved debug_epoch18.png
+Epoch 19/25 | train L1: 0.0227 | val L1: 0.0210
+ saved best.pt
+Saved debug_epoch19.png
+Epoch 20/25 | train L1: 0.0225 | val L1: 0.0205
+ saved best.pt
+Saved debug_epoch20.png
+Epoch 21/25 | train L1: 0.0224 | val L1: 0.0207
+Saved debug_epoch21.png
+Epoch 22/25 | train L1: 0.0222 | val L1: 0.0212
+Saved debug_epoch22.png
+Epoch 23/25 | train L1: 0.0221 | val L1: 0.0217
+Saved debug_epoch23.png
+Epoch 24/25 | train L1: 0.0219 | val L1: 0.0214
+Saved debug_epoch24.png
+Epoch 25/25 | train L1: 0.0217 | val L1: 0.0204
+ saved best.pt

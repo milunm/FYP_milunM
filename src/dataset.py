@@ -44,22 +44,22 @@ class PairedDataset(Dataset):
  
     def __getitem__(self, idx):
         # get file paths for this specific index
-        sketch_path = self.input_files[idx]
+        grayscale_path = self.input_files[idx]
         color_path = self.target_files[idx]
 
         #load images, force correct color modes
-        sketch_img = Image.open(sketch_path).convert("L")  #sketch is in L color space (1 channel)
+        grayscale_img = Image.open(grayscale_path).convert("L")  #grayscale is in L color space (1 channel)
         color_img = Image.open(color_path).convert("RGB")  #color image is in RGB color space(3 channels)
         
         #apply transforms (resize and convert to tensor)
-        sketch_tensor = self.sketch_transform(sketch_img)
+        grayscale_tensor = self.sketch_transform(grayscale_img)
         color_tensor = self.color_transform(color_img)
 
         # normalize images to [-1, 1] range (from initial [0,1] range
-        sketch_tensor = sketch_tensor * 2 - 1
+        grayscale_tensor = grayscale_tensor * 2 - 1
         color_tensor = color_tensor * 2 - 1
  
-        return sketch_tensor, color_tensor  #return the paired tensors for training
+        return grayscale_tensor, color_tensor  #return the paired tensors for training
     
 
   

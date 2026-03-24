@@ -9,13 +9,13 @@ test_dataset = PairedDataset(split="test", size=256) #test dataset object
 
 # data loaders
 
-train_loader = DataLoader(train_dataset, batch_size = 20, shuffle=True, pin_memory=True, num_workers=0) #training data loader with batch size of 20 and shuffling enabled
+train_loader = DataLoader(train_dataset, batch_size = 3, shuffle=True, pin_memory=True, num_workers=0) #training data loader with batch size of 20 and shuffling enabled
 #shuffling ensures each epoch sees data in different order, improving generalization
 
-val_loader = DataLoader(val_dataset, batch_size = 20, shuffle=False, pin_memory=True, num_workers=0) #validation data loader with batch size of 20 and no shuffling
+val_loader = DataLoader(val_dataset, batch_size = 3, shuffle=False, pin_memory=True, num_workers=0) #validation data loader with batch size of 20 and no shuffling
 #no shuffling as we want consistent evaluation
 
-test_loader = DataLoader(test_dataset, batch_size = 20, shuffle=False, pin_memory=True, num_workers=0) #test data loader with batch size of 20 and no shuffling
+test_loader = DataLoader(test_dataset, batch_size = 3, shuffle=False, pin_memory=True, num_workers=0) #test data loader with batch size of 20 and no shuffling
 #no shuffling as we want consistent evaluation in testing
 # pin_memory=True speeds up data transfer to GPU
 

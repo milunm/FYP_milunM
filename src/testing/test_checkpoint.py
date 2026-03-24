@@ -7,9 +7,9 @@ from torchmetrics.image import PeakSignalNoiseRatio, StructuralSimilarityIndexMe
 import lpips #metrics for analysing results
 
 
-# for UNET, switch commented lines
-from src.models.baseline_model import BaselineModel as ModelClass
-#from src.models.unet_model import UNet as ModelClass   # easy switch between models, GAN is same type
+# for UNET and GAN, switch commented lines
+#from src.models.baseline_model import BaselineModel as ModelClass
+from src.models.unet_model import UNet as ModelClass   # easy switch between models, GAN is same type
 
 
 
@@ -20,9 +20,9 @@ from src.DataLoader import test_loader
 
 
 # choose checkpoint here 
-#CKPT_PATH = "src/models/checkpoints/UNET/best_UNET.pt"
-#CKPT_PATH = "src/models/checkpoints/GAN_Pix2Pix/last_gan.pt" #for GAN, switch to GAN checkpoint
-CKPT_PATH = "src/models/checkpoints/BaselineCNN/best_baseline.pt" #for baseline model, switch to baseline checkpoint
+#CKPT_PATH = "src/models/checkpoints/UNET_Final/last_unet_final.pt"
+CKPT_PATH = "src/models/checkpoints/GAN_FinalVersion/last_gan_final.pt" #for GAN, switch to GAN checkpoint
+#CKPT_PATH = "src/models/checkpoints/BaselineCNN_final/last_CNN_final.pt" #for baseline model, switch to baseline checkpoint
 
 
 
@@ -49,8 +49,8 @@ def main():
 
 
    
-    state_dict = ckpt["model_state"] 
-    #state_dict = ckpt["generator_state"] #for GAN, switch to generator state dict
+    #state_dict = ckpt["model_state"] 
+    state_dict = ckpt["generator_state"] #for GAN, switch to generator state dict
     model.load_state_dict(state_dict, strict=True)
     model.to(device)  #move model to device
 

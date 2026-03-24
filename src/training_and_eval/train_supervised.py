@@ -57,7 +57,7 @@ def train_supervised( #inputs for supervised training function
     num_workers: int = 0, #number of worker threads for data loading (set to 0 as issues occured with higher numbers on Windows)
     pin_memory: bool = True, #pin memory for faster data transfer to GPU
     save_debug_every: int = 5,#save debug grid every N epochs
-    test_each_epoch: bool = False,   # whether to run test set evaluation each epoch
+    
 ):
     """
     Supervised trainer for sketch->color models.
@@ -74,7 +74,7 @@ def train_supervised( #inputs for supervised training function
     # -------- data --------
     train_ds = PairedDataset(split="train", size=size) #create dataset object pointing at training input and target folders
     val_ds = PairedDataset(split="val", size=size) #create dataset object pointing at validation input and target folders
-    test_ds = PairedDataset(split="test", size=size) #create dataset object pointing at test input and target folders
+   
 
     train_loader = DataLoader( #data loader for training batches and shuffle data
         train_ds,
@@ -92,14 +92,7 @@ def train_supervised( #inputs for supervised training function
         pin_memory=pin_memory
     )
 
-    test_loader = DataLoader( #data loader for test batches without shuffling
-        test_ds,
-        batch_size=batch_size,
-        shuffle=False,
-        num_workers=num_workers,
-        pin_memory=pin_memory 
-    )   #data loaders for train, val, test sets
-
+   
     # -------- model --------
     model = model.to(device) #move model to the selected device (GPU/CPU)
 
@@ -137,15 +130,7 @@ def train_supervised( #inputs for supervised training function
         val_avg = evaluate_epoch(model, val_loader, loss_fn, device) #compute average validation loss over all batches
 
         #optional to run test set evaluation each epoch
-        if test_each_epoch:
-            test_avg = evaluate_epoch(model, test_loader, loss_fn, device)
-            print(
-                f"Epoch {epoch:02d}/{epochs} | train L1: {train_avg:.4f} | val L1: {val_avg:.4f} | test L1: {test_avg:.4f}"
-            )
-        else:
-            print(
-                f"Epoch {epoch:02d}/{epochs} | train L1: {train_avg:.4f} | val L1: {val_avg:.4f}"
-            )
+       
 
         # SAVE last checkpoint (every epoch) 
         torch.save( 

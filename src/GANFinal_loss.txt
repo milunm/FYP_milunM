@@ -1,0 +1,82 @@
+Device: cuda
+Epoch 1: Train Loss = 10.6609, L1 Loss = 0.0638
+Epoch 1: Val L1 Loss = 0.0358
+ saved best_gan.pt
+Saved debug_epoch01.png
+Epoch 2: Train Loss = 10.9450, L1 Loss = 0.0517
+Epoch 2: Val L1 Loss = 0.0366
+Saved debug_epoch02.png
+Epoch 3: Train Loss = 11.0183, L1 Loss = 0.0470
+Epoch 3: Val L1 Loss = 0.0292
+ saved best_gan.pt
+Saved debug_epoch03.png
+Epoch 4: Train Loss = 11.5384, L1 Loss = 0.0452
+Epoch 4: Val L1 Loss = 0.0317
+Saved debug_epoch04.png
+Epoch 5: Train Loss = 10.5785, L1 Loss = 0.0440
+Epoch 5: Val L1 Loss = 0.0477
+Saved debug_epoch05.png
+Epoch 6: Train Loss = 10.0588, L1 Loss = 0.0421
+Epoch 6: Val L1 Loss = 0.0281
+ saved best_gan.pt
+Saved debug_epoch06.png
+Epoch 7: Train Loss = 9.5818, L1 Loss = 0.0408
+Epoch 7: Val L1 Loss = 0.0388
+Saved debug_epoch07.png
+Epoch 8: Train Loss = 9.6501, L1 Loss = 0.0407
+Epoch 8: Val L1 Loss = 0.0283
+Saved debug_epoch08.png
+Epoch 9: Train Loss = 9.8998, L1 Loss = 0.0404
+Epoch 9: Val L1 Loss = 0.0332
+Saved debug_epoch09.png
+Epoch 10: Train Loss = 9.4619, L1 Loss = 0.0391
+Epoch 10: Val L1 Loss = 0.0278
+ saved best_gan.pt
+Saved debug_epoch10.png
+Epoch 11: Train Loss = 9.5069, L1 Loss = 0.0391
+Epoch 11: Val L1 Loss = 0.0298
+Saved debug_epoch11.png
+Epoch 12: Train Loss = 9.4856, L1 Loss = 0.0386
+Epoch 12: Val L1 Loss = 0.0279
+Saved debug_epoch12.png
+Epoch 13: Train Loss = 9.1478, L1 Loss = 0.0382
+Epoch 13: Val L1 Loss = 0.0257
+ saved best_gan.pt
+Saved debug_epoch13.png
+Epoch 14: Train Loss = 9.5645, L1 Loss = 0.0384
+Epoch 14: Val L1 Loss = 0.0301
+Saved debug_epoch14.png
+Epoch 15: Train Loss = 9.4385, L1 Loss = 0.0380
+Epoch 15: Val L1 Loss = 0.0387
+Saved debug_epoch15.png
+Epoch 16: Train Loss = 9.9398, L1 Loss = 0.0376
+Epoch 16: Val L1 Loss = 0.0266
+Saved debug_epoch16.png
+Epoch 17: Train Loss = 9.6655, L1 Loss = 0.0374
+Epoch 17: Val L1 Loss = 0.0301
+Saved debug_epoch17.png
+Epoch 18: Train Loss = 9.6618, L1 Loss = 0.0370
+Epoch 18: Val L1 Loss = 0.0259
+Saved debug_epoch18.png
+Epoch 19: Train Loss = 9.9905, L1 Loss = 0.0371
+Epoch 19: Val L1 Loss = 0.0316
+Saved debug_epoch19.png
+Epoch 20: Train Loss = 9.6974, L1 Loss = 0.0362
+Epoch 20: Val L1 Loss = 0.0324
+Saved debug_epoch20.png
+Epoch 21: Train Loss = 9.8462, L1 Loss = 0.0366
+Epoch 21: Val L1 Loss = 0.0284
+Saved debug_epoch21.png
+Epoch 22: Train Loss = 10.3166, L1 Loss = 0.0369
+Epoch 22: Val L1 Loss = 0.0277
+Saved debug_epoch22.png
+Epoch 23: Train Loss = 9.2363, L1 Loss = 0.0360
+Epoch 23: Val L1 Loss = 0.0500
+Saved debug_epoch23.png
+Epoch 24: Train Loss = 10.0011, L1 Loss = 0.0362
+Epoch 24: Val L1 Loss = 0.0310
+Saved debug_epoch24.png
+Epoch 25: Train Loss = 10.1268, L1 Loss = 0.0356
+Epoch 25: Val L1 Loss = 0.0276
+Saved debug_epoch25.png
+Done. Checkpoints saved in: src\models\checkpoints\GAN_FinalVersion

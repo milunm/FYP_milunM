@@ -1,0 +1,60 @@
+Device: cuda
+Epoch 01/25 | train L1: 0.0567 | val L1: 0.0311
+ saved best.pt
+Saved debug_epoch01.png
+Epoch 02/25 | train L1: 0.0453 | val L1: 0.0338
+Saved debug_epoch02.png
+Epoch 03/25 | train L1: 0.0397 | val L1: 0.0288
+ saved best.pt
+Saved debug_epoch03.png
+Epoch 04/25 | train L1: 0.0380 | val L1: 0.0307
+Saved debug_epoch04.png
+Epoch 05/25 | train L1: 0.0351 | val L1: 0.0273
+ saved best.pt
+Saved debug_epoch05.png
+Epoch 06/25 | train L1: 0.0348 | val L1: 0.0257
+ saved best.pt
+Saved debug_epoch06.png
+Epoch 07/25 | train L1: 0.0330 | val L1: 0.0243
+ saved best.pt
+Saved debug_epoch07.png
+Epoch 08/25 | train L1: 0.0322 | val L1: 0.0257
+Saved debug_epoch08.png
+Epoch 09/25 | train L1: 0.0310 | val L1: 0.0245
+Saved debug_epoch09.png
+Epoch 10/25 | train L1: 0.0299 | val L1: 0.0227
+ saved best.pt
+Saved debug_epoch10.png
+Epoch 11/25 | train L1: 0.0293 | val L1: 0.0321
+Saved debug_epoch11.png
+Epoch 12/25 | train L1: 0.0288 | val L1: 0.0246
+Saved debug_epoch12.png
+Epoch 13/25 | train L1: 0.0285 | val L1: 0.0299
+Saved debug_epoch13.png
+Epoch 14/25 | train L1: 0.0281 | val L1: 0.0258
+Saved debug_epoch14.png
+Epoch 15/25 | train L1: 0.0280 | val L1: 0.0253
+Saved debug_epoch15.png
+Epoch 16/25 | train L1: 0.0275 | val L1: 0.0233
+Saved debug_epoch16.png
+Epoch 17/25 | train L1: 0.0267 | val L1: 0.0245
+Saved debug_epoch17.png
+Epoch 18/25 | train L1: 0.0259 | val L1: 0.0252
+Saved debug_epoch18.png
+Epoch 19/25 | train L1: 0.0263 | val L1: 0.0259
+Saved debug_epoch19.png
+Epoch 20/25 | train L1: 0.0257 | val L1: 0.0221
+ saved best.pt
+Saved debug_epoch20.png
+Epoch 21/25 | train L1: 0.0255 | val L1: 0.0212
+ saved best.pt
+Saved debug_epoch21.png
+Epoch 22/25 | train L1: 0.0247 | val L1: 0.0224
+Saved debug_epoch22.png
+Epoch 23/25 | train L1: 0.0243 | val L1: 0.0234
+Saved debug_epoch23.png
+Epoch 24/25 | train L1: 0.0241 | val L1: 0.0248
+Saved debug_epoch24.png
+Epoch 25/25 | train L1: 0.0244 | val L1: 0.0229
+Saved debug_epoch25.png
+Done. Checkpoints saved in: src\models\checkpoints\UNET_Final

@@ -81,7 +81,7 @@ def train_GAN( #inputs for GAN training function
     # -------- data --------
     train_ds = PairedDataset(split="train", size=size) #create dataset object pointing at training input and target folders
     val_ds = PairedDataset(split="val", size=size) #create dataset object pointing at validation input and target folders
-    test_ds = PairedDataset(split="test", size=size) #create dataset object pointing at test input and target folders
+    
 
     train_loader = DataLoader( #data loader for training batches and shuffle data
         train_ds,
@@ -99,13 +99,7 @@ def train_GAN( #inputs for GAN training function
         pin_memory=pin_memory
     )
 
-    test_loader = DataLoader( #data loader for test batches without shuffling
-        test_ds,
-        batch_size=batch_size,
-        shuffle=False,
-        num_workers=num_workers,
-        pin_memory=pin_memory 
-    )   #data loaders for train, val, test sets
+    
 
     # -------- model --------
     Generator = Generator.to(device) #move Generator model to the selected device (GPU/CPU)
