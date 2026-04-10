@@ -21,7 +21,7 @@ from src.DataLoader import test_loader
 
 # choose checkpoint here 
 #CKPT_PATH = "src/models/checkpoints/UNET_Final/last_unet_final.pt"
-CKPT_PATH = "src/models/checkpoints/GAN_FinalVersion/last_gan_final.pt" #for GAN, switch to GAN checkpoint
+CKPT_PATH = "src/models/checkpoints/GAN_FinalVersion/best_gan_forDemo.pt" #for GAN, switch to GAN checkpoint
 #CKPT_PATH = "src/models/checkpoints/BaselineCNN_final/last_CNN_final.pt" #for baseline model, switch to baseline checkpoint
 
 
@@ -112,7 +112,7 @@ def main():
 
     avg_l1 = total / max(1, n) #compute average L1 loss over all batches
     avg_psnr = total_psnr / max(1, n) #compute average PSNR over all batches
-    avg_ssim = total_ssim / max(1, n) #compute average SS
+    avg_ssim = total_ssim / max(1, n) #compute average SSIM
     avg_lpips = total_lpips / max(1, n) #compute average LPIPS over all batches
 
     (out_dir / "metrics.txt").write_text(f"avg_L1: {avg_l1:.6f}\n"

@@ -7,7 +7,7 @@ class Discriminator(nn.Module):
 
         def conv_block(in_channels, out_channels, stride): #takes in in_channels, returns out_channels, takes in stride
             return nn.Sequential( #sequential container to stack layers
-                nn.Conv2d(in_channels, out_channels, kernel_size=4, stride=stride, padding=1), #4x4 window over pixels, 1 stride ensures images arent shrunk too fast, padding 1 to maintain spatial dimensions
+                nn.Conv2d(in_channels, out_channels, kernel_size=4, stride=stride, padding=1), #4x4 window over pixels, stride controls downsampling rate, padding 1 to maintain spatial dimensions
                 nn.BatchNorm2d(out_channels), # normalizes activations to improve training stability
                 nn.LeakyReLU(0.2, inplace=True) #similar to ReLu but allows small gradient when negative
             )

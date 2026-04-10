@@ -34,10 +34,10 @@ def save_debug_grid(x, pred, y, out_path: Path): #function to save debug image g
 
 @torch.no_grad() #disable gradient calculations for evaluation
 def evaluate_epoch(model, loader, loss_fn, device): #inputs model, data loader, loss function, device
-    """
-    Runs evaluation on a loader (val or test).
-    Returns average loss over all batches.
-    """
+    
+    #Runs evaluation on a loader (val or test).
+    #Returns average loss over all batches.
+    
     model.eval() #set model to evaluation mode
     total = 0.0 #initialize total loss to 0
 
@@ -64,13 +64,13 @@ def train_GAN( #inputs for GAN training function
     save_debug_every: int = 5,#save debug grid every N epochs
     
 ):
-    """
-    Supervised trainer for sketch->color models.
-    - trains on train split
-    - runs validation each epoch
+    
+    #GAN trainer for sketch->color models.
+    #- trains on train split
+    #- runs validation each epoch
     
     
-    """
+    
 
     # device prioritization: GPU if available, else CPU
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
